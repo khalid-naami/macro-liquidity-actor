@@ -1,0 +1,156 @@
+{
+    "actorSpecification": 1,
+    "fields": {
+        "type": "object",
+        "properties": {
+            "recordType": {
+                "type": "string",
+                "title": "Record Type"
+            },
+            "asOfDate": {
+                "type": "string",
+                "title": "As Of Date"
+            },
+            "totalAssetsBillions": {
+                "type": "number",
+                "title": "Fed Total Assets ($B)"
+            },
+            "reverseRepoBillions": {
+                "type": "number",
+                "title": "Reverse Repo RRP ($B)"
+            },
+            "treasuryAccountBillions": {
+                "type": "number",
+                "title": "Treasury Account TGA ($B)"
+            },
+            "netLiquidityBillions": {
+                "type": "number",
+                "title": "Net Liquidity ($B)"
+            },
+            "netLiquidityWeeklyDeltaBillions": {
+                "type": "number",
+                "title": "Weekly Delta ($B)"
+            },
+            "netLiquidityMonthlyDeltaBillions": {
+                "type": "number",
+                "title": "Monthly Delta ($B)"
+            },
+            "realGdpGrowthYoY": {
+                "type": "number",
+                "title": "Real GDP YoY (%)"
+            },
+            "cpiInflationYoY": {
+                "type": "number",
+                "title": "CPI Inflation YoY (%)"
+            },
+            "cpiInflationMoM": {
+                "type": "number",
+                "title": "CPI MoM (%)"
+            },
+            "macroEconomicRegime": {
+                "type": "string",
+                "title": "Macro Regime"
+            },
+            "spyCorrelationR": {
+                "type": "number",
+                "title": "SPY Correlation (R)"
+            },
+            "btcCorrelationR": {
+                "type": "number",
+                "title": "BTC Correlation (R)"
+            },
+            "qqqCorrelationR": {
+                "type": "number",
+                "title": "QQQ Correlation (R)"
+            },
+            "gldCorrelationR": {
+                "type": "number",
+                "title": "GLD Correlation (R)"
+            },
+            "fedTargetReentryDate": {
+                "type": "string",
+                "title": "Estimated 2% Reentry Date"
+            }
+        }
+    },
+    "views": {
+        "overview": {
+            "title": "Macro Liquidity Overview",
+            "description": "Executive dashboard of Fed Net Liquidity, balance sheet drivers, risk asset correlations, and macro inflation/growth regimes.",
+            "transformation": {
+                "fields": [
+                    "asOfDate",
+                    "netLiquidityBillions",
+                    "netLiquidityWeeklyDeltaBillions",
+                    "totalAssetsBillions",
+                    "reverseRepoBillions",
+                    "treasuryAccountBillions",
+                    "spyCorrelationR",
+                    "btcCorrelationR",
+                    "qqqCorrelationR",
+                    "gldCorrelationR",
+                    "realGdpGrowthYoY",
+                    "cpiInflationYoY",
+                    "macroEconomicRegime"
+                ]
+            },
+            "display": {
+                "component": "table",
+                "columns": {
+                    "asOfDate": {
+                        "label": "Date",
+                        "format": "text"
+                    },
+                    "netLiquidityBillions": {
+                        "label": "Net Liquidity ($B)",
+                        "format": "number"
+                    },
+                    "netLiquidityWeeklyDeltaBillions": {
+                        "label": "1W Change ($B)",
+                        "format": "number"
+                    },
+                    "totalAssetsBillions": {
+                        "label": "Fed Assets ($B)",
+                        "format": "number"
+                    },
+                    "reverseRepoBillions": {
+                        "label": "RRP ($B)",
+                        "format": "number"
+                    },
+                    "treasuryAccountBillions": {
+                        "label": "TGA ($B)",
+                        "format": "number"
+                    },
+                    "spyCorrelationR": {
+                        "label": "SPY Corr (R)",
+                        "format": "number"
+                    },
+                    "btcCorrelationR": {
+                        "label": "BTC Corr (R)",
+                        "format": "number"
+                    },
+                    "qqqCorrelationR": {
+                        "label": "QQQ Corr (R)",
+                        "format": "number"
+                    },
+                    "gldCorrelationR": {
+                        "label": "GLD Corr (R)",
+                        "format": "number"
+                    },
+                    "realGdpGrowthYoY": {
+                        "label": "GDP YoY %",
+                        "format": "percentage"
+                    },
+                    "cpiInflationYoY": {
+                        "label": "CPI YoY %",
+                        "format": "percentage"
+                    },
+                    "macroEconomicRegime": {
+                        "label": "Macro Regime",
+                        "format": "text"
+                    }
+                }
+            }
+        }
+    }
+}
