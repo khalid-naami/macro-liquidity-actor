@@ -1,0 +1,12 @@
+{
+    "actorOutputSchemaVersion": 1,
+    "title": "Macro Liquidity Output",
+    "properties": {
+        "dataset": {
+            "type": "string",
+            "title": "Dataset link",
+            "description": "Direct link to the dataset containing Fed Net Liquidity intelligence, risk asset correlation overlays, and macroeconomic cycles.",
+            "template": "{{links.apiDefaultDatasetUrl}}/items"
+        }
+    }
+}
