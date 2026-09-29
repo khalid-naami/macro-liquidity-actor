@@ -1,0 +1,49 @@
+{
+    "title": "Macro Liquidity & Fed Balance Sheet Input",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "overlayAssets": {
+            "title": "Risk Asset Overlays",
+            "type": "array",
+            "description": "List of tickers to align on weekly Wednesday Net Liquidity dates and compute Pearson correlation coefficients for.",
+            "editor": "json",
+            "prefill": ["SPY", "QQQ", "BTC-USD", "ETH-USD", "GLD"],
+            "default": ["SPY", "QQQ", "BTC-USD", "ETH-USD", "GLD"]
+        },
+        "timeHorizonDays": {
+            "title": "Time Horizon (Days)",
+            "type": "integer",
+            "description": "Number of days back for historical overlay and correlation calculations (e.g. 365 = 1Y, 1095 = 3Y, 1825 = 5Y, 7300 = Max).",
+            "default": 1095,
+            "minimum": 180,
+            "maximum": 7300
+        },
+        "includeGdpCpiAnalysis": {
+            "title": "Include GDP & CPI Economic Dashboard",
+            "type": "boolean",
+            "description": "Calculate US Real GDP YoY Growth, CPI YoY Inflation, and identify Macro Economic Regimes.",
+            "default": true
+        },
+        "cpiSimulationMomPct": {
+            "title": "Forward CPI Simulation Assumed MoM Change (%)",
+            "type": "number",
+            "description": "Hypothetical month-over-month CPI rate to project 12-month YoY inflation trajectory and 2.0% Fed target re-entry date.",
+            "default": 0.20,
+            "minimum": -0.50,
+            "maximum": 1.00
+        },
+        "includeHistoricalLiquiditySeries": {
+            "title": "Include Weekly Net Liquidity Time Series",
+            "type": "boolean",
+            "description": "Output full weekly time series of Fed Total Assets, Reverse Repo, Treasury General Account, and Net Liquidity.",
+            "default": true
+        },
+        "includeG20Indicators": {
+            "title": "Include G20 Global Macro Country Database",
+            "type": "boolean",
+            "description": "Include multi-country GDP, inflation, unemployment, and debt metrics for G20 nations.",
+            "default": true
+        }
+    }
+}
