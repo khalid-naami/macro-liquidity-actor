@@ -1,0 +1,16 @@
+{
+    "actorSpecification": 1,
+    "name": "macro-liquidity-intelligence",
+    "title": "Global Macro Liquidity & Fed Balance Sheet Intelligence",
+    "description": "Federal Reserve Net Liquidity (WALCL - RRP - TGA), weekly Wednesday risk asset overlays (SPY, BTC, QQQ, GLD), Pearson statistical correlations, GDP/CPI cycles, and global macro indicators.",
+    "version": "1.0",
+    "meta": {
+        "template": "python-empty"
+    },
+    "dockerfile": "../Dockerfile",
+    "input": "./input_schema.json",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    },
+    "output": "./output_schema.json"
+}
