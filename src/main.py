@@ -1,6 +1,7 @@
 import asyncio
 import datetime
 import logging
+import math
 import pandas as pd
 from apify import Actor
 from src.data_engine import (
@@ -17,6 +18,25 @@ from src.macro_engine import (
 )
 
 logger = logging.getLogger(__name__)
+
+
+def sanitize_record(obj):
+    """Recursively strip None and non-finite floats before pushing to Apify dataset."""
+    if obj is None:
+        return None
+    if isinstance(obj, float):
+        return obj if math.isfinite(obj) else None
+    if isinstance(obj, list):
+        return [v for v in (sanitize_record(x) for x in obj) if v is not None]
+    if isinstance(obj, dict):
+        clean = {}
+        for k, v in obj.items():
+            sv = sanitize_record(v)
+            if sv is not None:
+                clean[k] = sv
+        return clean
+    return obj
+
 
 async def main():
     async with Actor:
@@ -77,7 +97,7 @@ async def main():
         qqq_r = correlations.get("QQQ", {}).get("rCoefficient")
         gld_r = correlations.get("GLD", {}).get("rCoefficient")
         
-        master_record = {
+        master_record = sanitize_record({
             "recordType": "MACRO_LIQUIDITY_DOSSIER",
             "asOfDate": liq_metrics.get("asOfDate", datetime.date.today().strftime('%Y-%m-%d')),
             "totalAssetsBillions": liq_metrics.get("totalAssetsBillions"),
@@ -101,22 +121,28 @@ async def main():
             "gdpCpiAnalysis": gdp_cpi_results,
             "g20Rankings": g20_data,
             "calculatedAt": datetime.datetime.now(datetime.timezone.utc).isoformat()
-        }
+        })
         
-        # Push master record to dataset
-        await Actor.push_data(master_record)
+        records_pushed = 0
+        if master_record and master_record.get("netLiquidityBillions") is not None:
+            await Actor.push_data(master_record)
+            records_pushed += 1
         
         # Push weekly liquidity time series rows for direct chart rendering
         if include_ts:
             for _, row in df_liq_filtered.iterrows():
-                await Actor.push_data({
+                d_str = row['Date'].strftime('%Y-%m-%d')
+                ts_row = sanitize_record({
                     "recordType": "WEEKLY_LIQUIDITY_SERIES",
-                    "date": row['Date'].strftime('%Y-%m-%d'),
+                    "asOfDate": d_str,
+                    "date": d_str,
                     "totalAssetsBillions": round(float(row['Total_Assets']), 2),
                     "reverseRepoBillions": round(float(row['Reverse_Repo']), 2),
                     "treasuryAccountBillions": round(float(row['TGA']), 2),
                     "netLiquidityBillions": round(float(row['Net_Liquidity']), 2)
                 })
+                await Actor.push_data(ts_row)
+                records_pushed += 1
                 
         # Store executive summary in default Key-Value store
         summary_payload = {
@@ -131,6 +157,9 @@ async def main():
             "g20Highlights": g20_data[:5] if g20_data else []
         }
         await Actor.set_value("OUTPUT", summary_payload)
+        if records_pushed == 0:
+            await Actor.fail(status_message="Macro Liquidity Actor produced 0 records.")
+            return
         
         Actor.log.info(f"✅ Macro Liquidity Actor completed! Master dossier and {len(df_liq_filtered) if include_ts else 0} weekly records pushed to Apify Dataset.")
 
