@@ -69,6 +69,8 @@ def calculate_asset_correlations(df_liq: pd.DataFrame, asset_dict: dict) -> dict
             
         if len(merged) >= 10:
             r = float(merged['Net_Liquidity'].corr(merged['Asset_Price']))
+            if pd.isna(r) or not np.isfinite(r):
+                r = 0.0
             r_rounded = round(r, 4)
             
             # Classification
@@ -185,11 +187,11 @@ def process_g20_macro_table(indicators_raw: dict) -> list:
         country_records.append({
             "iso3": iso,
             "countryName": name,
-            "gdpBillionsUSD": round(float(gdp_usd) / 1e9, 2) if gdp_usd else None,
-            "gdpGrowthYoYPct": round(float(gdp_growth), 2) if gdp_growth else None,
-            "inflationYoYPct": round(float(inflation), 2) if inflation else None,
-            "unemploymentPct": round(float(unemp), 2) if unemp else None,
-            "debtToGdpPct": round(float(debt), 2) if debt else None
+            "gdpBillionsUSD": round(float(gdp_usd) / 1e9, 2) if gdp_usd is not None else None,
+            "gdpGrowthYoYPct": round(float(gdp_growth), 2) if gdp_growth is not None else None,
+            "inflationYoYPct": round(float(inflation), 2) if inflation is not None else None,
+            "unemploymentPct": round(float(unemp), 2) if unemp is not None else None,
+            "debtToGdpPct": round(float(debt), 2) if debt is not None else None
         })
         
     country_records.sort(key=lambda x: x["gdpBillionsUSD"] or 0, reverse=True)
