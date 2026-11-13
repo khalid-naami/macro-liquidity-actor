@@ -1,75 +1,136 @@
 {
     "actorSpecification": 1,
     "fields": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
+        "additionalProperties": true,
+        "required": [],
         "properties": {
             "recordType": {
                 "type": "string",
-                "title": "Record Type"
+                "title": "Record Type",
+                "nullable": true
             },
             "asOfDate": {
                 "type": "string",
-                "title": "As Of Date"
+                "title": "As Of Date",
+                "nullable": true
+            },
+            "date": {
+                "type": "string",
+                "title": "Date",
+                "nullable": true
             },
             "totalAssetsBillions": {
                 "type": "number",
-                "title": "Fed Total Assets ($B)"
+                "title": "Fed Total Assets ($B)",
+                "nullable": true
             },
             "reverseRepoBillions": {
                 "type": "number",
-                "title": "Reverse Repo RRP ($B)"
+                "title": "Reverse Repo RRP ($B)",
+                "nullable": true
             },
             "treasuryAccountBillions": {
                 "type": "number",
-                "title": "Treasury Account TGA ($B)"
+                "title": "Treasury Account TGA ($B)",
+                "nullable": true
             },
             "netLiquidityBillions": {
                 "type": "number",
-                "title": "Net Liquidity ($B)"
+                "title": "Net Liquidity ($B)",
+                "nullable": true
             },
             "netLiquidityWeeklyDeltaBillions": {
                 "type": "number",
-                "title": "Weekly Delta ($B)"
+                "title": "Weekly Delta ($B)",
+                "nullable": true
             },
             "netLiquidityMonthlyDeltaBillions": {
                 "type": "number",
-                "title": "Monthly Delta ($B)"
+                "title": "Monthly Delta ($B)",
+                "nullable": true
+            },
+            "netLiquidityYearlyDeltaBillions": {
+                "type": "number",
+                "title": "Yearly Delta ($B)",
+                "nullable": true
+            },
+            "policyRegime": {
+                "type": "string",
+                "title": "Policy Regime",
+                "nullable": true
             },
             "realGdpGrowthYoY": {
                 "type": "number",
-                "title": "Real GDP YoY (%)"
+                "title": "Real GDP YoY (%)",
+                "nullable": true
             },
             "cpiInflationYoY": {
                 "type": "number",
-                "title": "CPI Inflation YoY (%)"
+                "title": "CPI Inflation YoY (%)",
+                "nullable": true
             },
             "cpiInflationMoM": {
                 "type": "number",
-                "title": "CPI MoM (%)"
+                "title": "CPI MoM (%)",
+                "nullable": true
             },
             "macroEconomicRegime": {
                 "type": "string",
-                "title": "Macro Regime"
+                "title": "Macro Regime",
+                "nullable": true
             },
             "spyCorrelationR": {
                 "type": "number",
-                "title": "SPY Correlation (R)"
+                "title": "SPY Correlation (R)",
+                "nullable": true
             },
             "btcCorrelationR": {
                 "type": "number",
-                "title": "BTC Correlation (R)"
+                "title": "BTC Correlation (R)",
+                "nullable": true
             },
             "qqqCorrelationR": {
                 "type": "number",
-                "title": "QQQ Correlation (R)"
+                "title": "QQQ Correlation (R)",
+                "nullable": true
             },
             "gldCorrelationR": {
                 "type": "number",
-                "title": "GLD Correlation (R)"
+                "title": "GLD Correlation (R)",
+                "nullable": true
             },
             "fedTargetReentryDate": {
                 "type": "string",
-                "title": "Estimated 2% Reentry Date"
+                "title": "Estimated 2% Reentry Date",
+                "nullable": true
+            },
+            "assetCorrelations": {
+                "type": "object",
+                "title": "Asset Correlations",
+                "nullable": true,
+                "additionalProperties": true
+            },
+            "gdpCpiAnalysis": {
+                "type": "object",
+                "title": "GDP & CPI Analysis",
+                "nullable": true,
+                "additionalProperties": true
+            },
+            "g20Rankings": {
+                "type": "array",
+                "title": "G20 Rankings",
+                "nullable": true,
+                "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                }
+            },
+            "calculatedAt": {
+                "type": "string",
+                "title": "Calculated At",
+                "nullable": true
             }
         }
     },
@@ -96,7 +157,7 @@
             },
             "display": {
                 "component": "table",
-                "columns": {
+                "properties": {
                     "asOfDate": {
                         "label": "Date",
                         "format": "text"
@@ -139,11 +200,11 @@
                     },
                     "realGdpGrowthYoY": {
                         "label": "GDP YoY %",
-                        "format": "percentage"
+                        "format": "number"
                     },
                     "cpiInflationYoY": {
                         "label": "CPI YoY %",
-                        "format": "percentage"
+                        "format": "number"
                     },
                     "macroEconomicRegime": {
                         "label": "Macro Regime",
