@@ -1,0 +1,15 @@
+{
+    "actorKeyValueStoreSchemaVersion": 1,
+    "title": "Macro Liquidity Key-Value Store",
+    "description": "Executive summary payload for Global Macro Liquidity & Fed Balance Sheet Intelligence.",
+    "collections": {
+        "output": {
+            "title": "Macro Liquidity Summary",
+            "description": "Summary report of Fed Net Liquidity, asset correlations, GDP/CPI trajectory, and G20 highlights.",
+            "key": "OUTPUT",
+            "contentTypes": [
+                "application/json"
+            ]
+        }
+    }
+}
